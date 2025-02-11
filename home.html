@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PCOS Care Hub</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #A7C5EB, #F8EDEB);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      box-sizing: border-box;
+    }
+    
+    header {
+      background: linear-gradient(90deg, #FFA69E, #861657);
+      color: #FFFFFF;
+      padding: 70px 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .login-btn {
+      background-color: #5B3758;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 1.1em;
+      cursor: pointer;
+      position: absolute;
+      right: 20px;
+      top: 20px;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .main-content {
+      border: 2px solid rgb(94, 25, 94);
+      border-radius: 10px;
+      padding: 25px;
+      margin: auto;
+      background-color: #ffffff;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 100%;
+      text-align: center;
+      line-height: 2.0;
+      letter-spacing: 0.5px;
+    }
+
+    .big-text {
+      font-size: 5rem;
+      font-style: italic;
+      font-family: "Script MT Bold", "Lucida Handwriting", cursive;
+      color: #ffffff;
+    }
+
+    h1 {
+      text-align: center;
+      color: rgb(94, 25, 94);
+      margin: 20px 0;
+    }
+
+    p {
+      color: #333;
+    }
+
+    #motivation {
+      color: #8a0232;
+      font-weight: bold;
+      font-size: 1.1em;
+      text-align: center;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+      padding-top: 60px;
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 400px;
+      border-radius: 10px;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      cursor: pointer;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button[type="submit"] {
+      background-color: #A020F0;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 1em;
+    }
+
+    button[type="submit"]:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="big-text">PCOS CARE HUB</div>
+    <button class="login-btn" id="loginBtn">Login</button>
+  </header>
+
+  <div class="content">
+    <div class="main-content">
+      <h1>Welcome to PCOS Care Hub</h1>
+      <p>PCOS is a common and manageable condition that many women face, but with the right lifestyle changes, medical treatments, and support, it’s possible to live a healthy, fulfilling life...</p>
+      <p id="motivation">Stay positive, seek support, and trust that you have the strength to overcome the challenges of PCOS.</p>
+    </div>
+  </div>
+
+  <!-- Modal for login -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Login / Sign Up</h2>
+      <form id="loginForm" action="RegisterUser" method="post">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    var modal = document.getElementById("myModal");
+    var btn = document.getElementById("loginBtn");
+    var span = document.getElementsByClassName("close")[0];
+
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diet Planner for PCOS</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #A7C5EB, #F8EDEB);
+            display: flex;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .content-container {
+            margin-left: 250px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        header {
+            background: linear-gradient(90deg, #FFA69E, #861657);
+            color: #FFFFFF;
+            padding: 15px;
+            width: 100%;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        /* Diet Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .diet-buttons button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #c080b5;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .diet-buttons button:hover {
+            background-color: #a05f82;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content-container">
+        <header>
+            <h1>Diet Planner for PCOS</h1>
+        </header>
+
+        <div>
+            <h2>Your 90-Day Diet Plan</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Food Items</th>
+                    </tr>
+                </thead>
+                <tbody id="dietTableBody"></tbody>
+            </table>
+
+            <div class="diet-buttons">
+                <input type="number" id="dayInput" placeholder="Enter Day (1-90)" min="1" max="90" />
+                <button onclick="addDay()">Add Day</button>
+                <button onclick="goToFoodEntry()">Add Food Items</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addDay() {
+            const dayInput = document.getElementById('dayInput').value;
+
+            // Validate day input (must be between 1 and 90)
+            if (dayInput >= 1 && dayInput <= 90) {
+                const userId = 1; // Use actual user ID from the session or elsewhere
+
+                // Create a FormData object to send data to the server
+                const formData = new FormData();
+                formData.append('user_id', userId);
+                formData.append('day', dayInput);
+
+                // Make the AJAX request to add the day
+                fetch('add_day.jsp', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        // Optionally, refresh the table or UI
+                        loadDietTable();
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                alert('Please enter a valid day between 1 and 90.');
+            }
+        }
+
+        function loadDietTable() {
+            const dietTableBody = document.getElementById('dietTableBody');
+            const dayInput = document.getElementById('dayInput').value;
+            
+            // Insert the new day into the diet table
+            const row = dietTableBody.insertRow();
+            row.insertCell(0).innerText = 'Day ' + dayInput;
+            row.insertCell(1).innerHTML = `<a href="food-entry.html?day=${dayInput}">Add Food</a>`;
+        }
+
+        function goToFoodEntry() {
+            const day = document.getElementById('dayInput').value;
+            if (day) window.location.href = 'food-entry.html?day=' + day;
+            else alert('Please enter a valid day first.');
+        }
+    </script>
+
+</body>
+</html>

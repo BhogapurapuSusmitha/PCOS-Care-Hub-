@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PCOS Care Hub</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #A7C5EB, #F8EDEB);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      box-sizing: border-box;
+    }
+    
+    header {
+      background: linear-gradient(90deg, #FFA69E, #861657);
+      color: #FFFFFF;
+      padding: 70px 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .content {
+      display: flex;
+      flex: 1;
+      padding: 20px;
+    }
+
+    .sidebar {
+      width: 200px; /* Set a fixed width for the sidebar */
+      background-color: #f2f2f2; /* Optional: Background color for the sidebar */
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar li {
+      margin: 10px 0;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: #861657; /* Link color */
+      font-weight: bold;
+    }
+
+    .sidebar a:hover {
+      text-decoration: underline; /* Underline on hover */
+    }
+
+    .main-content {
+      flex: 1; /* This allows the main content to take the remaining space */
+      padding: 25px;
+      margin-left: 20px; /* Space between sidebar and main content */
+      border: 2px solid rgb(94, 25, 94);
+      border-radius: 10px;
+      background-color: #ffffff;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      line-height: 2.0;
+      letter-spacing: 0.5px;
+    }
+
+    .big-text {
+      font-size: 5rem;
+      font-style: italic;
+      font-family: "Script MT Bold", "Lucida Handwriting", cursive;
+      color: #ffffff;
+    }
+
+    h1 {
+      text-align: center;
+      color: rgb(94, 25, 94);
+      margin: 20px 0;
+    }
+
+    p {
+      color: #333;
+    }
+
+    #motivation {
+      color: #8a0232;
+      font-weight: bold;
+      font-size: 1.1em;
+      text-align: center;
+    }
+
+    .survey-info {
+      margin-top: 20px;
+      font-size: 1.1em;
+      color: #333;
+    }
+
+    .survey-button {
+      background-color: #c080b5;
+      color: white;
+      border: none;
+      padding: 15px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 1em;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    .survey-button:hover {
+      background-color: #a05f82;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="big-text">PCOS CARE HUB</div>
+  </header>
+
+  <div class="content">
+    <div class="sidebar">
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="diet.html">Diet</a></li>
+        <li><a href="exercise.html">Exercise</a></li>
+        <li><a href="feedback.html">Feedback</a></li>
+      </ul>
+    </div>
+    <div class="main-content">
+      <h1>Welcome to PCOS Care Hub</h1>
+      <p>PCOS is a common and manageable condition that many women face, but with the right lifestyle changes, medical treatments, and support, it’s possible to live a healthy, fulfilling life...</p>
+      <p id="motivation">Stay positive, seek support, and trust that you have the strength to overcome the challenges of PCOS.</p>
+      <p class="survey-info">This webpage is designed to help you change your PCOS management approach. Take a simple survey to check whether you might have PCOS or not!</p>
+      <a href="question.html"><button class="survey-button">Take the Questionnaire</button></a>
+    </div>
+  </div>
+</body>
+</html>

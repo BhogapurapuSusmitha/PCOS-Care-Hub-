@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Nutrient Entry</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #A7C5EB, #F8EDEB);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        header {
+            background: linear-gradient(90deg, #FFA69E, #861657);
+            color: #FFFFFF;
+            padding: 50px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .login-btn {
+            background-color: #5B3758;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .main-content {
+            border: 2px solid rgb(94, 25, 94);
+            border-radius: 10px;
+            padding: 25px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            line-height: 2.0;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #A020F0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1em;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        h1 {
+            text-align: center;
+            color: rgb(94, 25, 94);
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Food Nutrient Evaluation</h1>
+    </header>
+    <div class="content">
+        <div class="main-content">
+            <h2>Enter Food Items</h2>
+            <form action="processFood.jsp" method="post">
+                <label for="foodInput">Food Items (comma-separated):</label>
+                <input type="text" id="foodInput" name="foodInput" placeholder="e.g., rice, chicken" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

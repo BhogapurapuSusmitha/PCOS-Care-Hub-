@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCOS Assessment Chatbot</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('D:/Program Files/webapps/PCOS/background.jpeg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #A7C5EB, #F8EDEB);
+        }
+        .chat-container {
+            max-width: 600px;
+            width: 100%;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+            border: 2px solid rgb(94, 25, 94);
+        }
+        h1 {
+            text-align: center;
+            background: linear-gradient(135deg, #FFA69E, #861657);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            border-bottom: 2px solid #861657;
+        }
+        .chat-box {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f0f8ff;
+        }
+        .user-message, .bot-message {
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 15px;
+            max-width: 70%;
+            clear: both;
+        }
+        .user-message {
+            background-color: #007BFF;
+            color: white;
+            text-align: right;
+            float: right;
+            animation-delay: 0.2s;
+        }
+        .bot-message {
+            background-color: #f0f0f0;
+            color: #333;
+            float: left;
+            animation-delay: 0.4s;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .typing-indicator {
+            display: none;
+            float: left;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #f0f0f0;
+            color: #333;
+            max-width: 70%;
+            clear: both;
+        }
+        .typing-dots {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            margin-right: 3px;
+            background-color: #999;
+            border-radius: 50%;
+            animation: blink 1s infinite alternate;
+        }
+        .typing-dots:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-dots:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes blink {
+            from {
+                opacity: 0.3;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 15px;
+            border: none;
+            border-radius: 0 0 0 15px;
+            outline: none;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+        input[type="text"]:focus {
+            background-color: #e0f7fa;
+        }
+        button {
+            background-color: #c080b5;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            cursor: pointer;
+            border-radius: 0 0 15px 0;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #a05f82;
+        }
+        .input-container {
+            display: flex;
+            position: relative;
+        }
+        .input-container::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #861657;
+            transition: width 0.3s;
+        }
+        .input-container:hover::before {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <h1>PCOS Assessment Chatbot</h1>
+    <div class="chat-box" id="chatBox">
+        <div class="typing-indicator" id="typingIndicator">
+            <span class="typing-dots"></span>
+            <span class="typing-dots"></span>
+            <span class="typing-dots"></span>
+        </div>
+    </div>
+    <div class="input-container">
+        <input type="text" id="userInput" placeholder="Type your answer..." />
+        <button id="sendBtn">Send</button>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        "1. Do you have irregular periods (e.g., more than 35 days between periods)?",
+        "2. Do you frequently miss periods (fewer than 8 periods in a year)?",
+        "3. Have you experienced long stretches (several months) without a period?",
+        "4. Do you have very heavy or very light periods?",
+        "5. Do you experience excessive hair growth on your face, chest, back, or abdomen?",
+        "6. Have you noticed an increase in acne or oily skin?",
+        "7. Do you experience thinning hair or hair loss from your scalp?",
+        "8. Do you have dark patches of skin (acanthosis nigricans) on areas like your neck or armpits?",
+        "9. Have you gained weight unexpectedly, or do you find it hard to lose weight despite efforts?",
+        "10. Do you tend to gain weight around your abdomen (belly area)?",
+        "11. Have you been diagnosed with insulin resistance, pre-diabetes, or Type 2 diabetes?",
+        "12. Are you trying to get pregnant or have you experienced difficulty conceiving (infertility)?",
+        "13. Have you ever been diagnosed with cysts on your ovaries via ultrasound?",
+        "14. Do you experience pelvic pain, especially during ovulation or your periods?",
+        "15. Do you have a family history of PCOS, diabetes, or metabolic syndrome?",
+        "16. Have you ever had blood tests showing high levels of testosterone or other male hormones?"
+    ];
+
+    const answers = [];
+    let currentQuestion = 0;
+    const chatBox = document.getElementById("chatBox");
+    const userInput = document.getElementById("userInput");
+    const sendBtn = document.getElementById("sendBtn");
+    const typingIndicator = document.getElementById("typingIndicator");
+
+    function addMessage(content, sender) {
+        const messageDiv = document.createElement("div");
+        messageDiv.textContent = content;
+        messageDiv.classList.add(sender + '-message');
+        chatBox.appendChild(messageDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function askQuestion() {
+        if (currentQuestion < questions.length) {
+            setTimeout(() => {
+                typingIndicator.style.display = "none";
+                addMessage(questions[currentQuestion], 'bot');
+            }, 1000);
+        } else {
+            analyzeAnswers();
+            sendBtn.disabled = true;
+            userInput.disabled = true;
+        }
+    }
+
+    function analyzeAnswers() {
+        let riskFactors = 0;
+        const importantQuestions = [0, 1, 3, 4, 5, 9, 12, 13, 15];
+        importantQuestions.forEach(index => {
+            if (answers[index].toLowerCase() === "yes") {
+                riskFactors++;
+            }
+        });
+
+        let resultMessage = "";
+        let targetPage = "";
+
+        if (riskFactors >= 5) {
+            resultMessage = "Based on your answers, you may be at risk for PCOS. We recommend consulting a healthcare provider for a full assessment.";
+            targetPage = "diet.html";
+        } else {
+            resultMessage = "Your responses do not indicate a high risk for PCOS. If you have concerns, consider consulting a healthcare provider.";
+            targetPage = "login.html";
+        }
+
+        setTimeout(() => {
+            addMessage(resultMessage, 'bot');
+            window.location.href = targetPage;
+        }, 1000);
+    }
+
+    function submitAnswer() {
+        const userAnswer = userInput.value.trim();
+        if (userAnswer) {
+            answers.push(userAnswer);
+            addMessage(userAnswer, 'user');
+            userInput.value = "";
+            if (currentQuestion < questions.length) {
+                currentQuestion++;
+                typingIndicator.style.display = "block";
+                askQuestion();
+            }
+        }
+    }
+
+    sendBtn.addEventListener('click', submitAnswer);
+
+    // Handle the Enter key
+    userInput.addEventListener('keydown', function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Prevent form submission if in a form
+            submitAnswer();
+        }
+    });
+
+    // Initial chatbot greeting
+    addMessage("Hello! I'm here to assess your PCOS risk. Please answer the following questions.", "bot");
+    typingIndicator.style.display = "block";
+    askQuestion();
+</script>
+
+</body>
+</html>
